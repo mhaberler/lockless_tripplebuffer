@@ -28,8 +28,9 @@ include(ExternalProject)
 
 ExternalProject_Add(
     gtest
-    SVN_REPOSITORY http://googletest.googlecode.com/svn/tags/release-1.7.0
+    GIT_REPOSITORY git@github.com:google/googletest.git
     TIMEOUT 10
+	SOURCE_DIR gtest/src/gtest/
     # Disable install step
     INSTALL_COMMAND ""
     # Wrap download, configure and build steps in a script to log output
@@ -55,17 +56,10 @@ message("binary_dir: ${binary_dir}")
 
 add_executable(${GTEST_TARGET} ${TESTS_FILES})
 include_directories(
-  ${source_dir}/include
+  ${source_dir}/googletest/include  ${PROJECT_SOURCE_DIR}/include
 )
-
+target_link_libraries(${GTEST_TARGET} "${binary_dir}/googlemock/gtest/libgtest.a")
 add_dependencies(${GTEST_TARGET} gtest)
-target_link_libraries(${GTEST_TARGET}
-  ${TARGET}
-# TODO OP should work but with something around ENABLE_EXPORTS
-#  gtest gtest_main
-  # ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
-  # ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX}
-)
 
 # TODO: specific paths for Debug and Release might have to
 # be also put in place for MSVC
@@ -80,10 +74,11 @@ if(CMAKE_GENERATOR MATCHES "Xcode")
   target_link_libraries( ${GTEST_TARGET} optimized
     ${binary_dir}/Release/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 else()
+  message(STATUS "Linking ${binary_dir}/googlemock/gtest/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}")
   target_link_libraries( ${GTEST_TARGET}
-    ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX})
+    ${binary_dir}/googlemock/gtest/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX})
   target_link_libraries( ${GTEST_TARGET}
-    ${binary_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
+    ${binary_dir}/googlemock/gtest/${CMAKE_STATIC_LIBRARY_PREFIX}gtest_main${CMAKE_STATIC_LIBRARY_SUFFIX})
 endif()
 
 
