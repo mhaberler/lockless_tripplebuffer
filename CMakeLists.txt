@@ -59,14 +59,14 @@ if(APPLE)
 endif()
 
 
-add_library(${MYLIB_NAME} INTERFACE)
+#add_library(${MYLIB_NAME} INTERFACE)
 # set_property(TARGET ${MYLIB_NAME}
-#   APPEND PROPERTY INTERFACE_INCLUDE_DIRECTORIES
+#  APPEND PROPERTY INTERFACE_INCLUDE_DIRECTORIES
 #   ${PROJECT_SOURCE_DIR}/include
 # )
 
-target_include_directories(${MYLIB_NAME}
-  INTERFACE ${PROJECT_SOURCE_DIR}/include)
+#target_include_directories(${MYLIB_NAME}
+#  INTERFACE ${PROJECT_SOURCE_DIR}/include)
 
 if(MYLIB_TESTS_ENABLED)
   add_subdirectory(test)
