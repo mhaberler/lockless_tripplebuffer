@@ -8,7 +8,7 @@
 #include <thread>
 #include <array>
 #include <algorithm>
-
+#include <mutex>
 
 #include <gtest/gtest.h>
 #include <lockless_tripplebuffer/TripleBuffer.h>
