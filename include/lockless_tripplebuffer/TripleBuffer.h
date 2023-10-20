@@ -55,8 +55,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 template <typename T>
 class TripleBuffer {
  public:
-  TripleBuffer<T>();
-  TripleBuffer<T>(const T&);
+  TripleBuffer();
+  TripleBuffer(const T&);
 
   // get the current snap to read
   T snap() const;
@@ -77,8 +77,8 @@ class TripleBuffer {
 
  private:
   // non-copyable behavior
-  TripleBuffer<T>(const TripleBuffer<T>&) = delete;
-  TripleBuffer<T>& operator=(const TripleBuffer<T>&) = delete;
+  TripleBuffer(const TripleBuffer<T>&) = delete;
+  TripleBuffer& operator=(const TripleBuffer<T>&) = delete;
 
   // check if the newWrite bit is 1
   bool isNewWrite(uint_fast8_t flags);
